@@ -1,0 +1,112 @@
+ALSA commands:
+aplay -D plughw:2,0 sampl.wav
+arecord -D plughw:1,0 -f dat record.wav
+
+gst commands:
+playback:
+gst-launch-1.0 playbin uri=file:///root/fw/test/audio_test/record_files/audio.mp3 audio-sink="alsasink device=hw:2,0"
+gst-launch-1.0 playbin audio-sink="alsasink device=hw:2,0" ! uri=file:///root/fw/test/audio_test/record_files/audio.mp3 
+
+recording:
+gst-launch-1.0 alsasrc device=hw:1,0 ! audioconvert ! audioresample ! volume volume=3.0 ! lamemp3enc ! filesink location=record.mp3
+
+Creation of systemdservice:
+By default services of the system are in /lib/systemd/system 
+1.sudo systemctl edit --force --full systeminfo.service
+2.write the file & save /etc/systemd/system directory.
+3.sudo systemctl daemon-reload
+4.sudo systemctl start systeminfo.service
+5.sudo systemctl status systeminfo.service
+6.To enable on startup/reboot, sudo systemctl enable systeminfo.service
+
+Removing systemd services:
+1.sudo systemctl stop systeminfo.service
+2.sudo systemctl status systeminfo.service
+3.sudo systemctl disable systeminfo.service
+4.rm /etc/systemd/system/*servicename
+  rm /usr/lib/systemd/system/*servicename 
+5.sudo systemctl daemon-reload
+
+To view systemctl services:
+ systemctl list-units --type=service
+
+To print in console via service:
+1.type tty in console
+eg:/dev/ttymxc2
+2.Add below lines in service file
+StandardOutput=tty
+TTYPath=/dev/ttymxc2
+3.Now all printf/stdout will come in console.
+
+service example:
+[Unit]
+Description=Hello World Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/hello
+StandardOutput=tty
+TTYPath=/dev/ttymxc2
+
+[Install]
+WantedBy=multi-user.target
+
+
+Dbus build:
+gcc -o dbus_subscriber_test dbus_subscriber_test_main.c dbus_functions.c dbus_functions.h  $(pkg-config --cflags --libs dbus-1)
+gcc -o dbus_publisher_test dbus_publish_test_main.c dbus_functions.c dbus_functions.h  $(pkg-config --cflags --libs dbus-1)
+
+g++ -o fw_send jsonHandler.cpp json_test_FW_sender.cpp dbus_src/dbus_functions.c ../defines.c $(pkg-config --cflags --libs dbus-1)
+g++ -o sw_receive jsonHandler.cpp json_test_SW_receiver.cpp dbus_src/dbus_functions.c ../defines.c $(pkg-config --cflags --libs dbus-1)
+
+alias scp= 'insmod /lib/modules/5.10.72-bsp-yocto-nxp-i.mx8mm-pd22.1.0/kernel/drivers/usb/gadget/legacy/g_ether.ko;ifconfig usb0 192.168.3.11 up;'
+
+g++ -o fw_receive jsonHandler.cpp json_test_FW_receive.cpp dbus_src/dbus_functions.c ../defines.c $(pkg-config --cflags --libs dbus-1)
+g++ -o sw_send jsonHandler.cpp json_test_SW_sender.cpp dbus_src/dbus_functions.c ../defines.c $(pkg-config --cflags --libs dbus-1)
+
+${CXX} -o fw_Send jsonHandler.cpp json_test_FW_TXRX.cpp dbus_src/dbus_functions.c rgbHandler.c ../defines.c $(pkg-config --cflags --libs dbus-1) -pthread
+
+Create alias:
+alias x='command1;command2;command3;'
+
+
+AT commands:
+AT
+AT+CREG --> Should return 0,1
+AT+COPS? -->NETWORK
+AT+QPCMV?
+AT+QCFG="USBCFG"
+AT+QCFG="USBCFG",0x2C7C,0x0125,1,1,1,1,1,1,1--ENABLE UAC
+
+
+SMS:
+AT+CMGF=1
+AT+CSCS="GSM"
+AT+CMGS="6369532916"; --->semicolon must
+
+
+Routing from audio board to LTE Model
+arecord -f S16_LE -r 8000 -D plughw:1,0 | aplay -f S16_LE -r 8000 -D plughw:3,0 &  --> routing mic of board to LTE port (sender to receiver)
+arecord -f S16_LE -r 8000 -D plughw:3,0 | aplay -f S16_LE -r 8000 -D plughw:2,0 &  --> routing LTE port to board device speaker
+
+
+
+arecord -f S16_LE -r 8000 -D plughw:1,0 | aplay -f S16_LE -r 8000 -D plughw:3,0 &
+arecord -D plughw:3,0 -f S16_LE -r 44100 -c 1 -t wav - | sox -t wav - -c 2 -t wav - | aplay -D plughw:2,0 &
+
+
+insmod /lib/modules/5.10.72-bsp-yocto-nxp-i.mx8mm-pd22.1.0/kernel/drivers/usb/gadget/legacy/g_ether.ko;ifconfig usb0 192.168.3.11 up;
+
+
+
+
+
+
+
+
+
+
+
+
+
