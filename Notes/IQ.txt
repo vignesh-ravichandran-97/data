@@ -1,0 +1,32 @@
+Device Driver:
+1.What is DD & populated to user space via which?
+2.what is kernel job related to system call?
+3.What are types of drivers?
+4.what is character driver and block drivers?
+5.what is device file and when its get populated?
+6.How kernel connect open system call to intended's driver system call?
+7.Explain the role of VFS with related to system call?
+8.What are some kernel apis & what will they do for character driver?
+9.Explain complete flow of inode when system call happen, when its created & by whom?
+10.Explain Dynamic file creation/role of udev.
+11.Explain the example of character driver in code.
+12.Explain APIs for transfer data between kernel and user space.
+13.What is platform bus?
+14.Comparison between PC PCI bus & embedded scenario.
+15.Explain about device enumeration of OS & in linux scenario.
+16.Explain the methods of adding platform devices information to kernal.
+17.Explain board file approach & Device tree method.
+18.what is platform device & platform driver?
+19.Explain Device- driver platform bus matching.
+20.Explain probe function and remove function of platform driver.
+21.Explain code flow for platform device & driver.
+22.What are the resource managed kernel APIs & how it is used to make platform device code as simplified one?
+23.Lets say three different versions of chip, but having one platform driver. Now how platform bus load driver for corresponding devices?
+24.Explain Device tree & dtsi(SOC).
+25.Explain the use of compatible property.
+26.Explain by relating soc,board level & probe function to match compatible property.
+27.Explain use of device tree binding.
+28.Explain device tree match table list needed in platform driver structure.
+29.Explain linux device model,kobject,sysfs,attributes.
+30.What is race condition,critical section,atomic,atomic API.
+31.Explain locking in linux-spinlock,deadlock& mutex.
