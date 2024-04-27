@@ -30,3 +30,78 @@ Device Driver:
 29.Explain linux device model,kobject,sysfs,attributes.
 30.What is race condition,critical section,atomic,atomic API.
 31.Explain locking in linux-spinlock,deadlock& mutex.
+
+Kernel development:
+1.What is DD?
+2.what is tradiitonal method why kernel module,what it is,its extension, command to check kernel version,default path?
+    Purpose:
+        Device drivers specifically handle communication between the operating system and hardware devices.
+        Kernel modules can serve various purposes beyond device drivers, such as adding support for new filesystems, networking protocols, or system utilities.
+
+    Loading and Unloading:
+        Device drivers are typically statically linked into the kernel or loaded during system boot.
+        Kernel modules are dynamically loaded and unloaded from the kernel at runtime, allowing for more flexibility and easier updates without requiring a system reboot.
+
+    Compilation and Deployment:
+        Device drivers are usually compiled as part of the kernel itself or as separate loadable kernel modules during the kernel compilation process.
+        Kernel modules are compiled separately from the kernel and can be loaded into the kernel at any time after the system has booted.
+
+    Accessibility:
+        Device drivers are part of the kernel and have access to all kernel data structures and functions.
+        Kernel modules have limited access to kernel internals and must interact with the kernel through defined interfaces.
+3.What is the difference between kernel module and device drivers?
+4.what are the adv & disadv of lkm?
+5.what is the option for the kernel to enable lkm & in which file?
+6.What are the types of lkm? how lkm becomes in source tree module?
+7.Two paths for kernel modules & what is the difference b/w them?
+/sys/module provides runtime information about currently loaded kernel modules, while /lib/modules/<kernel-version> contains the kernel modules available for loading into the kernel, but not necessarily currently loaded.
+8.what are the LKM code components? 
+9.Example hello world lkm.
+10.What is issue while compiled as c code? How it is resolved?
+11.Cant we use makefile of kernel directly?
+12.what is the command for building lkm?
+13.Procedure to insert lkm & check loaded by logs/dmesg?
+14.Procedure to remove lkm & check loaded by logs/dmesg?
+15.what is Printk function,difference b/w printf?
+16.Explain the flow for insmod.
+17.Giving another name for lkm,span across multiple lines,single makefile for number of lkms.
+18.what is dmesg command and are various arguments,run in background with follow?
+19.Explain overviewing of compiling lkm from .c to .ko.
+20.What are the other files to be generated & explain modules.order.
+21.insmod vs modprobe.
+    insmod (Insert Module):
+        insmod is a low-level command that directly inserts a specified kernel module into the kernel, without considering any module dependencies.
+        It takes the path to the kernel module file (.ko) as an argument.
+        If the module being inserted has dependencies, you must ensure that those dependencies are already loaded before using insmod. Otherwise, the module insertion might fail or cause issues.
+        insmod doesn't automatically handle module dependencies, so it's less commonly used in practice compared to modprobe.
+	modprobe:
+    modprobe is a higher-level command that handles module dependencies automatically.
+		It takes the name of the module to be loaded as an argument, and it will load that module along with any dependencies required.
+		modprobe also performs other tasks, such as module option handling and blacklisting.
+		It searches for modules in predefined directories (/lib/modules/<kernel-version>/) and automatically loads the appropriate modules
+22.How modprobe calculate dependencies?
+23.How to pass arguments to lkm & builtin lkm?
+24.How can we pass arguments to lkm called by modprobe?
+25.What happens pass 0 as parameter argument for module_param in lkm?
+26.How to pass array as argument to lkm?
+27.what is symbol & symbol table for linux?
+28.How to export symbol? and paths for symbols in linux for builtin as well as for dynamic lkm?
+29.What is module stacking?
+30.Expain example of exporting function & variable/structure to other lkm & where to check symbols are exported (command)?
+31.What is version magic?
+32.What is tainted kernel & reasons for it,how to check it?
+33.what is the usecase of src version in modinfo output?
+34.where to check kernel log buffer size?
+35.Understand print_rate_limit,avoid new line in printk.
+36.How to enable pr_debug (lot of debug logs)(Dynamic debug)?
+37.What is kernel panic? reasons for it,give use case example?
+38.What is the way to instruct kernel to reboot after faced panic?. Explain example of kernel panic code.
+39.What is oops? what kernel do when faced oops?
+40.how to check number of processor?
+41.What is kernel thread,APIS?
+42.Explain usage of __init macro and how to check it.(/proc..?)
+43.How to list built in modules?
+44.How to load lkm automatically after bootup (full procedure)?
+45.What is blacklist lkm? How to do it using config file & from command line?
+46.Explain the linux booting flow.
+
